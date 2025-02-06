@@ -1,8 +1,14 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
 #nav{
     display: flex;
     background-color: rgb(248, 167, 17);
     padding: 1%;
     column-gap: 1%;
+    
 }
 #logo{
     height: 30px;
@@ -16,20 +22,73 @@
 #headerdiv{
     display: flex;
     align-items: center;
+    column-gap: 1300px;
+    
 }
+ /* Hamburger Icon */
+ .hamburger {
+    font-size: 24px;
+    cursor: pointer;
+    background: none;
+    border: none;
+    color: white;
+}
+/* Sidebar Menu */
+.sidebar {
+    position: fixed;
+    top: 0;
+    right: -250px; /* Hidden initially */
+    width: 250px;
+    height: 100%;
+    background: white;
+    box-shadow: -2px 0 5px rgba(0, 0, 0, 0.2);
+    transition: right 0.3s ease-in-out;
+    /* padding-top: 50px; */
+}
+
+/* Active Class to Show Sidebar */
+.sidebar.active {
+    right: 0;
+}
+
+/* Close Button */
+.close-btn {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+/* Sidebar Links */
+.sidebar ul {
+    list-style: none;
+    padding: 0;
+}
+
+.sidebar ul li {
+    padding: 15px;
+    border-bottom: 1px solid #ddd;
+    cursor: pointer;
+}
+
+.sidebar ul li:hover {
+    background: #f5f5f5;
+}
+
 #banner{
     background-image: url(images/banner1.jpg);
     background-repeat:no-repeat;
     background-size: cover;
     height: 500px;
     width: 100%;
-    /* filter: brightness(50%); */
+   
     
 }
 #bannercontent{
     display: flex;
     justify-content: center;
-    margin-top: 50px;
+    /* margin-top: 50px; */
     column-gap: 1%;
 }
 #searchbar{   

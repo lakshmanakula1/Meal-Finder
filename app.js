@@ -15,3 +15,6 @@
 //     document.body.append (cont)
 // }
 // fdata() 
+function toggleMenu() {
+    document.getElementById("sidebar").classList.toggle("active");
+}
