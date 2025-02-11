@@ -2,6 +2,7 @@ body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
+    background-color: #ddd;
 }
 #nav{
     display: flex;
@@ -121,3 +122,26 @@ body {
     font-size: large;
     margin-top: -15px;
 }
+#headcategories{
+    margin-top: 80px;
+    margin-bottom: 3px;
+    margin-left: 80px;
+}
+#category{
+    display: flex;
+    flex-wrap: wrap;
+    margin-left: 70px;
+
+   
+}
+#cards{
+    background-color: white;
+margin: 1%;
+padding: 0.5%;
+border-radius: 2%;
+
+}
+#cards img{
+    width: 300px;
+}
+
