@@ -11,8 +11,10 @@ async function fdata() {
     let cont = document.getElementById('category')
     categories.map(items =>{
         cont.innerHTML += `
-        <div id="cards">
+        <div class="item">
         <img src =${items.strCategoryThumb}>
+        <div class="label">${items.strCategory}</div>
+
         </div>
         
         `
