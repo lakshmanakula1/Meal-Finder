@@ -3,19 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Meal Finder</title>
     <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
 </head>
 <body>
+
+    <!-- Navigation Bar -->
     <div id="nav">
-        <img src="/images/logo.jpg" id="logo" alt="">
+        <img src="/images/logo.jpg" id="logo" alt="Logo">
         <div id="headerdiv">
-            <a href="" id="header">MEAL FINDER</a>
+            <a href="#" id="header">MEAL FINDER</a>
             <button class="hamburger" onclick="toggleMenu()">☰</button>
         </div>
-        
-         <!-- Sidebar Menu -->
+    </div>
+
+    <!-- Sidebar Menu -->
     <div class="sidebar" id="sidebar">
         <span class="close-btn" onclick="toggleMenu()">×</span>
         <ul>
@@ -36,7 +39,7 @@
         </ul>
     </div>
 
-    </div>
+    <!-- Search Bar -->
     <div id="banner">
         <div id="bannercontent">
             <input type="text" placeholder="Search Recipes Here" id="searchbar">
@@ -48,17 +51,21 @@
         <div id="bannermatter2">
             <p>PERSONALIZE YOUR EXPERIENCE</p>
         </div>
-        
-      
-    </div>
-    <h1 id="headcategories">CATEGORIES</h1>
-    <hr width="100px" color="orange" size="5px" style="margin: 0% 0% 2% 5.5% ;">
-    <div id="category">
-        
-        
     </div>
 
-    <script src="app.js"></script>
+    <!-- Category Section -->
+    <h1 id="headcategories">CATEGORIES</h1>
+    <hr width="100px" color="orange" size="5px" style="margin: 0% 0% 2% 5.5%;">
     
+    <div id="category"></div>
+
+    <!-- Back Button -->
+    <button id="backButton" style="display: none;" onclick="showCategories()">⬅ Back to Categories</button>
+
+    <!-- Meals Section -->
+    <h2 id="mealHeader" style="display: none;">Meals:</h2>
+    <div id="meals"></div>
+
+    <script src="app.js"></script>
 </body>
 </html>
