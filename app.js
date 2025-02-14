@@ -1,51 +1,114 @@
+// Toggle Sidebar Menu
 function toggleMenu() {
     document.getElementById("sidebar").classList.toggle("active");
 }
 
-// Fetch and display categories dynamically
-async function fdata() {
-    try {
-        let apiData = await fetch('https://www.themealdb.com/api/json/v1/1/categories.php');
-        let { categories } = await apiData.json();
-        
-        let cont = document.getElementById('category');
-        cont.innerHTML = ""; // Clear previous content
+// Fetch and Display Categories
+async function fetchCategories() {
+    let apiUrl = "https://www.themealdb.com/api/json/v1/1/categories.php";
+    let apiData = await fetch(apiUrl);
+    let { categories } = await apiData.json();
 
-        categories.forEach(item => {
-            let div = document.createElement("div");
-            div.classList.add("item");
+    let categoryContainer = document.getElementById('category');
+    categoryContainer.innerHTML = ""; // Clear previous data
 
-            div.innerHTML = `
-                <img src="${item.strCategoryThumb}" alt="${item.strCategory}">
-                <div class="label">${item.strCategory}</div>
-            `;
+    categories.forEach(item => {
+        let categoryDiv = document.createElement("div");
+        categoryDiv.classList.add("item");
 
-            // Clicking a category fetches meals & hides categories
-            div.addEventListener("click", () => {
-                fetchMealsByCategory(item.strCategory);
-                cont.style.display = "none"; // Hide categories
-                document.getElementById("backButton").style.display = "block"; // Show Back Button
-            });
+        categoryDiv.innerHTML = `
+            <img src="${item.strCategoryThumb}" alt="${item.strCategory}">
+            <div class="label">${item.strCategory}</div>
+        `;
 
-            cont.appendChild(div);
+        // Click Event to Fetch Meals in that Category
+        categoryDiv.addEventListener("click", () => {
+            fetchMealsByCategory(item.strCategory);
+            document.getElementById("category").style.display = "none"; // Hide categories
         });
 
-        // Add event listeners to sidebar categories
-        addSidebarListeners();
-    } catch (error) {
-        console.error("Error fetching categories:", error);
-    }
+        categoryContainer.appendChild(categoryDiv);
+    });
 }
 
-// Fetch meals by category
+// Fetch Meals by Category
 async function fetchMealsByCategory(categoryName) {
-    try {
-        let apiData = await fetch(`https://www.themealdb.com/api/json/v1/1/filter.php?c=${categoryName}`);
-        let { meals } = await apiData.json();
+    let apiUrl = `https://www.themealdb.com/api/json/v1/1/filter.php?c=${categoryName}`;
+    let apiData = await fetch(apiUrl);
+    let { meals } = await apiData.json();
 
-        let mealContainer = document.getElementById('meals');
-        mealContainer.innerHTML = ""; // Clear previous meals
+    let mealContainer = document.getElementById('meals');
+    mealContainer.innerHTML = ""; // Clear previous data
 
+    meals.forEach(meal => {
+        let mealDiv = document.createElement("div");
+        mealDiv.classList.add("meal-item");
+
+        mealDiv.innerHTML = `
+            <img src="${meal.strMealThumb}" alt="${meal.strMeal}">
+            <div class="label">${meal.strMeal}</div>
+        `;
+
+        // Click Event to Show Meal Details
+        mealDiv.addEventListener("click", () => {
+            fetchMealDetails(meal.idMeal);
+        });
+
+        mealContainer.appendChild(mealDiv);
+    });
+
+    document.getElementById("sidebar").classList.remove("active"); // Close sidebar
+}
+
+// Fetch Meal Details by ID
+async function fetchMealDetails(mealID) {
+    let apiUrl = `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${mealID}`;
+    let apiData = await fetch(apiUrl);
+    let { meals } = await apiData.json();
+    let meal = meals[0];
+
+    let mealContainer = document.getElementById('meals');
+    mealContainer.innerHTML = ""; // Clear previous data
+
+    // Get Ingredients List
+    let ingredients = "";
+    for (let i = 1; i <= 20; i++) {
+        let ingredient = meal[`strIngredient${i}`];
+        let measure = meal[`strMeasure${i}`];
+        if (ingredient && ingredient.trim() !== "") {
+            ingredients += `<li>${measure} ${ingredient}</li>`;
+        }
+    }
+
+    // Display Meal Details
+    let mealDetails = `
+        <div class="meal-details">
+            <h2>${meal.strMeal}</h2>
+            <img src="${meal.strMealThumb}" alt="${meal.strMeal}">
+            <h3>Ingredients</h3>
+            <ul>${ingredients}</ul>
+            <h3>Instructions</h3>
+            <p>${meal.strInstructions}</p>
+            <button onclick="fetchCategories()">Back to Categories</button>
+        </div>
+    `;
+
+    mealContainer.innerHTML = mealDetails;
+}
+
+// Search Meals by Name
+async function searchMeal() {
+    let searchQuery = document.getElementById("searchbar").value.trim();
+    if (searchQuery === "") return; // Prevent empty search
+
+    let apiUrl = `https://www.themealdb.com/api/json/v1/1/search.php?s=${searchQuery}`;
+    let apiData = await fetch(apiUrl);
+    let { meals } = await apiData.json();
+
+    let mealContainer = document.getElementById('meals');
+    mealContainer.innerHTML = "";
+
+    if (meals) {
         meals.forEach(meal => {
             let mealDiv = document.createElement("div");
             mealDiv.classList.add("meal-item");
@@ -55,36 +118,27 @@ async function fetchMealsByCategory(categoryName) {
                 <div class="label">${meal.strMeal}</div>
             `;
 
+            // Click Event to Show Meal Details
+            mealDiv.addEventListener("click", () => {
+                fetchMealDetails(meal.idMeal);
+            });
+
             mealContainer.appendChild(mealDiv);
         });
-
-        // Hide sidebar after selection
-        document.getElementById("sidebar").classList.remove("active");
-
-    } catch (error) {
-        console.error("Error fetching meals:", error);
+    } else {
+        mealContainer.innerHTML = `<p style="text-align:center; font-size:20px; color:red;">No meals found!</p>`;
     }
 }
 
-// Add event listeners to sidebar categories
-function addSidebarListeners() {
-    let sidebarItems = document.querySelectorAll(".sidebar ul li");
+// Event Listener for Search Icon Click
+document.getElementById("searchicon").addEventListener("click", searchMeal);
 
-    sidebarItems.forEach(item => {
-        item.addEventListener("click", function () {
-            let category = this.innerText.trim(); // Get category name
-            fetchMealsByCategory(category);
-            document.getElementById("category").style.display = "none"; // Hide main categories
-            document.getElementById("backButton").style.display = "block"; // Show Back Button
-        });
-    });
-}
+// Event Listener for Enter Key in Search Bar
+document.getElementById("searchbar").addEventListener("keypress", function(event) {
+    if (event.key === "Enter") {
+        searchMeal();
+    }
+});
 
-// Show categories again when Back button is clicked
-function showCategories() {
-    document.getElementById("category").style.display = "flex"; // Show categories
-    document.getElementById("meals").innerHTML = ""; // Clear meals section
-    document.getElementById("backButton").style.display = "none"; // Hide Back Button
-}
-
-fdata(); // Call the function on page load
+// Load Categories on Page Load
+document.addEventListener("DOMContentLoaded", fetchCategories);
