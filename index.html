@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -13,7 +13,7 @@
     <div id="nav">
         <img src="/images/logo.jpg" id="logo" alt="Logo">
         <div id="headerdiv">
-            <a href="#" id="header" id="backButton"  onclick="showCategories()">MEAL FINDER</a>
+            <a href="index.html" id="header" id="backButton" onclick="showCategories()">MEAL FINDER</a>
             <button class="hamburger" onclick="toggleMenu()">☰</button>
         </div>
     </div>
@@ -55,17 +55,22 @@
 
     <!-- Category Section -->
     <h1 id="headcategories">CATEGORIES</h1>
-    <hr width="100px" color="orange" size="5px" style="margin: 0% 0% 2% 5.5%;">
+    
     
     <div id="category"></div>
 
-    <!-- Back Button -->
-    <!-- <button id="backButton" style="display: none;" onclick="showCategories()">⬅ Back to Categories</button> -->
+    
 
     <!-- Meals Section -->
-    <h2 id="mealHeader" style="display: none;">Meals:</h2>
+    <h1 id="mealHeader" style="display: none;">Meals:</h1>
+    
     <div id="meals"></div>
+    <div id="meal-container"></div>
+
+    <div id="meal-details" style="display: none;"></div>
+
 
     <script src="app.js"></script>
 </body>
 </html>
+!
