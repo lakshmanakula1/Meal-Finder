@@ -259,3 +259,159 @@ body {
     font-size: 18px;
     color: #E85D04;
 }
+
+
+
+.meal-details-container {
+    max-width: 900px;
+    margin: 20px auto;
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* General Container Styling */
+.meal-details-container {
+    max-width: 900px;
+    margin: 20px auto;
+    padding: 20px;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    font-family: 'Arial', sans-serif;
+}
+
+/* Meal Content Layout */
+.meal-content {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+}
+
+.meal-image img {
+    max-width: 350px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.meal-headingredients {
+    flex: 1;
+}
+
+.meal-header h2 {
+    font-size: 24px;
+    color: #d35400;
+    margin-bottom: 10px;
+}
+
+.meal-header p {
+    font-size: 16px;
+    color: #333;
+}
+
+.meal-header a {
+    color: #3498db;
+    text-decoration: none;
+}
+
+.meal-tag {
+    background: #f4d03f;
+    padding: 4px 8px;
+    border-radius: 5px;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+/* Ingredients Box */
+.meal-ingredients {
+    background: #e67e22;
+    color: #fff;
+    padding: 10px;
+    border-radius: 10px;
+    margin-top: 15px;
+}
+
+.meal-ingredients h3 {
+    text-align: center;
+}
+
+.meal-ingredients ul {
+    display: flex;
+    flex-wrap: wrap;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.meal-ingredients li {
+    flex: 1 1 45%;
+    background: #d35400;
+    margin: 5px;
+    padding: 5px 10px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+}
+
+/* Measurements */
+.meal-measure {
+    background: #f8f9fa;
+    padding: 10px;
+    border-radius: 10px;
+    margin-top: 15px;
+}
+
+.measure-list {
+    display: flex;
+    flex-wrap: wrap;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.measure-list li {
+    flex: 1 1 45%;
+    background: #ecf0f1;
+    margin: 5px;
+    padding: 5px 10px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+}
+
+.measure-list li::before {
+    content: '\1F9C1'; /* Spoon emoji */
+    margin-right: 8px;
+}
+
+/* Instructions */
+.meal-instructions {
+    margin-top: 20px;
+}
+
+.meal-instructions h3 {
+    font-size: 20px;
+    color: #e74c3c;
+}
+
+.meal-instructions ul {
+    list-style: none;
+    padding: 0;
+}
+
+.meal-instructions li {
+    margin-bottom: 10px;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+}
+
+.meal-instructions li::before {
+    content: '\2714'; /* Checkmark emoji */
+    color: #27ae60;
+    font-size: 18px;
+    margin-right: 10px;
+}

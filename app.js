@@ -7,9 +7,9 @@ async function fdata() {
     try {
         let apiData = await fetch('https://www.themealdb.com/api/json/v1/1/categories.php');
         let { categories } = await apiData.json();
-        
+
         let cont = document.getElementById('category');
-        cont.innerHTML = ""; 
+        cont.innerHTML = "";
 
         categories.forEach(item => {
             let div = document.createElement("div");
@@ -22,10 +22,10 @@ async function fdata() {
 
             div.addEventListener("click", () => {
                 fetchMealsByCategory(item.strCategory);
-                cont.style.display = "none"; 
+                cont.style.display = "none";
                 document.getElementById("headcategories").style.display = "none";
                 document.getElementById("mealHeader").style.display = "block";
-                document.getElementById("backButton").style.display = "block"; 
+                document.getElementById("backButton").style.display = "block";
             });
 
             cont.appendChild(div);
@@ -46,7 +46,7 @@ async function fetchMealsByCategory(categoryName) {
     let { meals } = await apiData.json();
 
     let mealContainer = document.getElementById('meals');
-    mealContainer.innerHTML = ""; 
+    mealContainer.innerHTML = "";
 
     meals.forEach(meal => {
         let mealDiv = document.createElement("div");
@@ -57,7 +57,7 @@ async function fetchMealsByCategory(categoryName) {
             <div class="label1">${meal.strMeal}</div>
         `;
 
-        
+
         mealDiv.addEventListener("click", () => {
             fetchMealDetails(meal.idMeal);
         });
@@ -65,7 +65,7 @@ async function fetchMealsByCategory(categoryName) {
         mealContainer.appendChild(mealDiv);
     });
 
-    document.getElementById("sidebar").classList.remove("active"); 
+    document.getElementById("sidebar").classList.remove("active");
 }
 
 
@@ -81,7 +81,7 @@ async function fetchMealDetails(mealId) {
     const data = await response.json();
     const meal = data.meals[0];
 
-    let ingredients = "";
+    let ingredients = [];
     let measurements = [];
 
     for (let i = 1; i <= 20; i++) {
@@ -89,28 +89,31 @@ async function fetchMealDetails(mealId) {
         let measure = meal[`strMeasure${i}`];
 
         if (ingredient && ingredient.trim() !== "") {
-            ingredients += `<li><span class="ingredient-number">${i}</span> ${ingredient}</li>`;
+            ingredients += `<li><span class="ingredient-number">${i}</span> .${ingredient}</li>`;
             measurements.push(`<li>🥄 ${measure} ${ingredient}</li>`);
         }
     }
 
     let mealDetails = `
         <div class="meal-details-container">
-            <div class="meal-header">
-                <h2>${meal.strMeal}</h2>
-                <p><strong>Category:</strong> ${meal.strCategory}</p>
-                <p><strong>Source:</strong> <a href="${meal.strSource}" target="_blank">${meal.strSource}</a></p>
-                <p><strong>Tags:</strong> <span class="meal-tag">${meal.strTags ? meal.strTags.split(',').join(', ') : 'N/A'}</span></p>
-            </div>
+            
 
             <div class="meal-content">
                 <div class="meal-image">
                     <img src="${meal.strMealThumb}" alt="${meal.strMeal}">
                 </div>
 
+                <div class = "meal-headingredients">
+                <div class="meal-header">
+                <h2>${meal.strMeal}</h2>
+                <p><strong>Category:</strong> ${meal.strCategory}</p>
+                <p><strong>Source:</strong> <a href="${meal.strSource}" target="_blank">${meal.strSource}</a></p>
+                <p><strong>Tags:</strong> <span class="meal-tag">${meal.strTags ? meal.strTags.split(',').join(', ') : 'N/A'}</span></p>
+            </div>
                 <div class="meal-ingredients">
                     <h3>Ingredients</h3>
                     <ul>${ingredients}</ul>
+                </div>
                 </div>
             </div>
 
@@ -122,7 +125,7 @@ async function fetchMealDetails(mealId) {
             <div class="meal-instructions">
                 <h3>Instructions:</h3>
                 <ul>
-                    ${meal.strInstructions.split('. ').map(step => step ? `<li>✅ ${step}.</li>` : '').join('')}
+                    ${meal.strInstructions.split('. ').map(step => step ? `<li> ${step}.</li>` : '').join('')}
                 </ul>
             </div>
         </div>
@@ -130,7 +133,7 @@ async function fetchMealDetails(mealId) {
 
     mealContainer.innerHTML = mealDetails;
     document.getElementById("meals").style.display = "none";
-} 
+}
 
 // Search Meals by Name
 
@@ -155,7 +158,7 @@ async function searchMeal() {
                 <div class="label">${meal.strMeal}</div>
             `;
 
-            
+
             mealDiv.addEventListener("click", () => {
                 fetchMealDetails(meal.idMeal);
             });
@@ -176,8 +179,8 @@ function addSidebarListeners() {
         item.addEventListener("click", function () {
             let category = this.innerText.trim();
             fetchMealsByCategory(category);
-            document.getElementById("category").style.display = "none"; 
-            document.getElementById("backButton").style.display = "block"; 
+            document.getElementById("category").style.display = "none";
+            document.getElementById("backButton").style.display = "block";
         });
     });
 }
@@ -186,13 +189,10 @@ function addSidebarListeners() {
 function showCategories() {
     document.getElementById("category").style.display = "flex";
     document.getElementById("meals").innerHTML = "";
-    document.getElementById("backButton").style.display = "none"; 
+    document.getElementById("backButton").style.display = "none";
 }
 
 fdata();
-
-
-
 
 document.getElementById("searchicon").addEventListener("click", () => {
     console.log("Search button clicked!");
@@ -200,9 +200,10 @@ document.getElementById("searchicon").addEventListener("click", () => {
     document.getElementById("headcategories").style.display = "none";
     document.getElementById("category").style.display = "none";
 });
+
 async function searchMeal() {
     let query = document.getElementById("searchbar").value.trim();
-    console.log("Searching for:", query); 
+    console.log("Searching for:", query);
 
     if (query === "") {
         alert("Please enter a meal name to search.");
@@ -241,7 +242,7 @@ async function searchMeal() {
 document.getElementById("searchicon").addEventListener("click", searchMeal);
 
 
-document.getElementById("searchbar").addEventListener("keypress", function(event) {
+document.getElementById("searchbar").addEventListener("keypress", function (event) {
     if (event.key === "Enter") {
         searchMeal();
     }
